@@ -91,25 +91,6 @@ public class SW
         // Schwerpunkt
         value = (double[])MyMassProp.CenterOfMass;
 
-        /*
-        Console.WriteLine("Mass properties before override");
-        Console.WriteLine("");
-        val = MyMassProp.Mass;
-        Console.WriteLine("Mass: " + val);
-        value = (double[])MyMassProp.CenterOfMass;
-        Console.WriteLine("Center of Mass: X:" + value[0] + " Y:" + value[1] + " Z:" + value[2]);
-        val = MyMassProp.Volume;
-        Console.WriteLine("Volume: " + val);
-        val = MyMassProp.Density;
-        Console.WriteLine("Density: " + val);
-        val = MyMassProp.SurfaceArea;
-        Console.WriteLine("Surface area: " + val);
-        pmoi = (double[])MyMassProp.PrincipalMomentsOfInertia;
-        Console.WriteLine("Principal moments of inertiae: Px: " + pmoi[0] + ", Py: " + pmoi[1] + ", and Pz: " + pmoi[2]);
-        vValue = (double[])MyMassProp.GetMomentOfInertia(0);
-        Console.WriteLine("Moments of inertia: Lxx: " + vValue[0] + ", Lxy: " + vValue[1] + ", Lxz: " + vValue[2] + ", Lyx: " + vValue[3] + ", Lyy: " + vValue[4] + ", Lyz: " + vValue[5] + ", Lzx: " + vValue[6] + ", Lzy: " + vValue[7] + ", Lzz: " + vValue[8]);
-        */
-
         return value;
     }
 
@@ -128,3 +109,22 @@ class Program
         Console.WriteLine("Schwerpunkt: X:" + SchwerpunktVektor[0] + " Y:" + SchwerpunktVektor[1] + " Z:" + SchwerpunktVektor[2]);
     }
 }
+
+        /*
+        Console.WriteLine("Mass properties before override");
+        Console.WriteLine("");
+        val = MyMassProp.Mass;
+        Console.WriteLine("Mass: " + val);
+        value = (double[])MyMassProp.CenterOfMass;
+        Console.WriteLine("Center of Mass: X:" + value[0] + " Y:" + value[1] + " Z:" + value[2]);
+        val = MyMassProp.Volume;
+        Console.WriteLine("Volume: " + val);
+        val = MyMassProp.Density;
+        Console.WriteLine("Density: " + val);
+        val = MyMassProp.SurfaceArea;
+        Console.WriteLine("Surface area: " + val);
+        pmoi = (double[])MyMassProp.PrincipalMomentsOfInertia;
+        Console.WriteLine("Principal moments of inertiae: Px: " + pmoi[0] + ", Py: " + pmoi[1] + ", and Pz: " + pmoi[2]);
+        vValue = (double[])MyMassProp.GetMomentOfInertia(0);
+        Console.WriteLine("Moments of inertia: Lxx: " + vValue[0] + ", Lxy: " + vValue[1] + ", Lxz: " + vValue[2] + ", Lyx: " + vValue[3] + ", Lyy: " + vValue[4] + ", Lyz: " + vValue[5] + ", Lzx: " + vValue[6] + ", Lzy: " + vValue[7] + ", Lzz: " + vValue[8]);
+        */
