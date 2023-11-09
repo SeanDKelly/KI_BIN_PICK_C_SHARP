@@ -58,11 +58,41 @@ public class SW
         {
             // Bauteil erfolgreich geöffnet
             Console.WriteLine("Bauteil erfolgreich geöffnet: " + swModel.GetTitle());
+            return swModel;
         }
 
         else
         {
             Console.WriteLine("Fehler beim Öffnen des Bauteils!");
+            return null;
+        }
+
+        // return swModel;
+    }
+
+    // Baugruppe öffnen
+    public ModelDoc2 OpenAssembly(string directory)
+    {
+        int longstatus = 0;
+        int longwarnings = 0;
+        ModelDoc2 swModel = null;
+
+        // "C:\\Users\\theja\\Downloads\\Greifer.SLDPRT"
+        swModel = swApp.OpenDoc6(directory,
+                                (int)swDocumentTypes_e.swDocASSEMBLY,
+                                (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
+                                "",
+                                ref longstatus,
+                                ref longwarnings);
+        if (swModel != null)
+        {
+            // Bauteil erfolgreich geöffnet
+            Console.WriteLine("Baugruppe erfolgreich geöffnet: " + swModel.GetTitle());
+        }
+
+        else
+        {
+            Console.WriteLine("Fehler beim Öffnen der Baugruppe!");
         }
 
         return swModel;
@@ -117,14 +147,20 @@ public class SW
 
 class Program
 {
-    static void Main()
+    static int Main()
     {
         Console.WriteLine("Starte SolidWorks");
         SW SWProgramm = new SW();
-        Console.WriteLine("Bauteil Öffnen");
-        ModelDoc2 Greifer = SWProgramm.OpenPart("C:\\Users\\theja\\Downloads\\Greifer.SLDPRT");
+        Console.WriteLine("Baugruppe Öffnen");
+        ModelDoc2 Greifer = SWProgramm.OpenPart("C:\\Users\\theja\\Downloads\\Antriebswelle.SLDPRT");
+        if (Greifer == null)
+        {
+            Console.WriteLine("Programm Stop");
+            return 0;
+        }
         Console.WriteLine("Schwerpunkt berechnen");
         double[] SchwerpunktVektor = SWProgramm.CenterOfMassPart(Greifer);
         Console.WriteLine("Schwerpunkt: X:" + SchwerpunktVektor[0] + " Y:" + SchwerpunktVektor[1] + " Z:" + SchwerpunktVektor[2]);
+        return 1;
     }
 }
