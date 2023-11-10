@@ -4,6 +4,7 @@ using System.Reflection;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
+namespace YourNamespace
 public class SW
 {
 
