@@ -4,11 +4,11 @@ using System.Reflection;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
-namespace YourNamespace
+namespace KI_BIN_PICK_C_;
 public class SW
 {
 
-    public SldWorks swApp = null;
+    private SldWorks swApp = null;
 
 
     // Constructor
@@ -42,35 +42,10 @@ public class SW
     }
 
     // Bauteil öffnen
-    public ModelDoc2 OpenPart(string directory)
+    public Part OpenPart(string directory)
     {
-        int longstatus = 0;
-        int longwarnings = 0;
-        ModelDoc2 swModel = null;
-
-        // "C:\\Users\\theja\\Downloads\\Greifer.SLDPRT"
-        swModel = swApp.OpenDoc6(directory,
-                                (int)swDocumentTypes_e.swDocPART,
-                                (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
-                                "",
-                                ref longstatus,
-                                ref longwarnings);
-        if (swModel != null)
-        {
-            // Bauteil erfolgreich geöffnet
-            Console.WriteLine("Bauteil erfolgreich geöffnet: " + swModel.GetTitle());
-            return swModel;
-        }
-
-        else
-        {
-            Console.WriteLine("Fehler beim Öffnen des Bauteils!");
-            return null;
-        }
-
-        // return swModel;
+        return new Part(this.swApp,directory);
     }
-
     // Baugruppe öffnen
     public ModelDoc2 OpenAssembly(string directory)
     {
@@ -108,7 +83,7 @@ public class SW
         double[] vValue;
         double[] value = new double[3];
         double val;
-
+       
 
         // Extended Properties of Part
         Extn = Part.Extension;
@@ -150,18 +125,45 @@ class Program
 {
     static int Main()
     {
-        Console.WriteLine("Starte SolidWorks");
+        Console.WriteLine("Starte SolidWorks, kann etwas dauern ...");
         SW SWProgramm = new SW();
-        Console.WriteLine("Baugruppe Öffnen");
-        ModelDoc2 Greifer = SWProgramm.OpenPart("C:\\Users\\theja\\Downloads\\Antriebswelle.SLDPRT");
-        if (Greifer == null)
+        // C:\Users\theja\HS-Kempten\S6\Projekt\Mechanik\Wellen
+        // C:\\Users\\theja\\Downloads\\Antriebswelle.SLDPRT
+
+        string dir = "";
+        while (true)
         {
-            Console.WriteLine("Programm Stop");
-            return 0;
+            // Eingabe pfad vom user
+            Console.WriteLine("Bitte Pfad zum Ordner eingeben in dem sich die Bauteile befinden.");
+            dir = "C:\\Users\\theja\\HS-Kempten\\S6\\Projekt\\Mechanik\\Wellen";
+            //dir = Console.ReadLine();
+
+            // Überprüfen ob das Verzeichnis exisitert
+            if (Directory.Exists(dir))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Verzeichnis war wohl falsch...");
+            }
         }
-        Console.WriteLine("Schwerpunkt berechnen");
-        double[] SchwerpunktVektor = SWProgramm.CenterOfMassPart(Greifer);
-        Console.WriteLine("Schwerpunkt: X:" + SchwerpunktVektor[0] + " Y:" + SchwerpunktVektor[1] + " Z:" + SchwerpunktVektor[2]);
+
+        // alle bauteile die sich im Ordner befinden auflisten
+        string[] bauteile = Directory.GetFiles(dir);
+        Part[] parts = new Part[bauteile.Length];
+        ///////////////////////////
+        
+        ///////////////////////////
+        int i = 0;
+        foreach (string bauteil in bauteile)
+        {
+            Console.WriteLine("Öffne Bauteil:" + bauteil);
+            parts[i] = SWProgramm.OpenPart(bauteil);
+            parts[i].Faces();
+            break;
+        }
+        
         return 1;
     }
 }
